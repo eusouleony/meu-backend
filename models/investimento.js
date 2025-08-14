@@ -1,10 +1,22 @@
-// web/models/Investimento.js
 const mongoose = require('mongoose');
 
-const investimentoSchema = new mongoose.Schema({
-  nome: { type: String, required: true },
-  valor: { type: Number, required: true },
-  data: { type: Date, default: Date.now }
+const InvestimentoSchema = new mongoose.Schema({
+  descricao: {
+    type: String,
+    required: true
+  },
+  valor: {
+    type: Number,
+    required: true
+  },
+  data: {
+    type: Date,
+    default: Date.now
+  },
+  categoria: {
+    type: String,
+    default: 'Geral'
+  }
 });
 
-module.exports = mongoose.model('Investimento', investimentoSchema);
+module.exports = mongoose.model('Investimento', InvestimentoSchema);
