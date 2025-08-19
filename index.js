@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config(); // para carregar as variáveis do .env no local
 
 // Importa as rotas
 const servicosRoutes = require('./routes/servicos');
@@ -12,12 +13,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexão com o MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/meuBanco', {
+// Conexão com o MongoDB Atlas (usando variável de ambiente)
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ Conectado ao MongoDB'))
+.then(() => console.log('✅ Conectado ao MongoDB Atlas'))
 .catch(err => console.error('❌ Erro ao conectar no MongoDB:', err));
 
 // Rotas
@@ -26,7 +29,7 @@ app.use('/api/investimentos', investimentosRoutes);
 
 // Rota inicial de teste
 app.get('/', (req, res) => {
-  res.send('🚀 Backend rodando com Express + MongoDB!');
+  res.send('🚀 Backend rodando com Express + MongoDB Atlas!');
 });
 
 // Porta
